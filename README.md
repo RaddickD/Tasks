@@ -1,98 +1,106 @@
-# Tasks Repository
+# Project Repository
 
-This repository contains DevOps tasks and automation scripts, including a certificate checker Dockerized application and Azure infrastructure scripts using Terraform.
+This repository contains multiple tasks, including a certificate checker and an Azure infrastructure setup using Terraform.
 
-## Project Structure
+---
 
-.
-├── TASK1
-│ └── cert-checker
-│ ├── Dockerfile
-│ ├── README.md
-│ ├── cert_checker.py
-│ ├── config.yaml
-│ ├── docker-compose.yml
-│ └── requirements.txt
-└── TASK2
-└── azure-infrastructure
-├── scripts
-└── terraform
-├── main.tf
-├── outputs.tf
-├── provider.tf
-└── variables.tf
+## TASK1: Certificate Checker
 
-bash
-Copy code
+**Location:** `TASK1/cert-checker`
 
-## TASK1 – Certificate Checker
+This task provides a Python-based tool to check SSL/TLS certificates. It is containerized using Docker and can be orchestrated with Docker Compose.
 
-A Python-based application that checks SSL/TLS certificates, containerized with Docker.
+### Files:
 
-### How to Run
+- `Dockerfile` — Docker image definition for the certificate checker.
+- `README.md` — Documentation for TASK1.
+- `cert_checker.py` — Python script for checking certificates.
+- `config.yaml` — Configuration file with target domains and options.
+- `docker-compose.yml` — Docker Compose setup for running the container.
+- `requirements.txt` — Python dependencies.
 
-**Using Docker Compose:**
+### Usage
+
+1. Build the Docker image:
 
 ```bash
-cd TASK1/cert-checker
-docker-compose up --build
-Directly with Docker:
-
-bash
-Copy code
 docker build -t cert-checker .
-docker run -v $(pwd)/config.yaml:/app/config.yaml cert-checker
-Python Environment (without Docker):
+Run using Docker:
 
 bash
 Copy code
-cd TASK1/cert-checker
-pip install -r requirements.txt
-python cert_checker.py --config config.yaml
-TASK2 – Azure Infrastructure
-Terraform scripts to provision Azure resources (virtual networks, storage, compute, etc.).
+docker run --rm -v $(pwd)/config.yaml:/app/config.yaml cert-checker
+Or run using Docker Compose:
 
-How to Run
+bash
+Copy code
+docker-compose up
+TASK2: Azure Infrastructure
+Location: TASK2/azure-infrastructure
+
+This task sets up Azure infrastructure using Terraform. The configuration provisions resources in Azure based on the variables defined.
+
+Folder Structure
+scripts/ — Contains helper scripts for deployment or configuration.
+
+terraform/ — Contains Terraform configuration files.
+
+Terraform Files
+main.tf — Main Terraform configuration defining resources.
+
+outputs.tf — Outputs of the Terraform deployment.
+
+provider.tf — Azure provider setup (subscription, credentials).
+
+variables.tf — Input variables for the infrastructure.
+
+Usage
+Initialize Terraform:
+
 bash
 Copy code
 cd TASK2/azure-infrastructure/terraform
 terraform init
+Validate configuration:
+
+bash
+Copy code
+terraform validate
+Plan deployment:
+
+bash
+Copy code
 terraform plan
+Apply deployment:
+
+bash
+Copy code
 terraform apply
+Note: Ensure that Azure credentials are correctly configured. You may use environment variables or a service principal.
+
+Repository Directory Tree
+arduino
+Copy code
+.
+├── TASK1
+│   └── cert-checker
+│       ├── Dockerfile
+│       ├── README.md
+│       ├── cert_checker.py
+│       ├── config.yaml
+│       ├── docker-compose.yml
+│       └── requirements.txt
+└── TASK2
+    └── azure-infrastructure
+        ├── scripts
+        └── terraform
+            ├── main.tf
+            ├── outputs.tf
+            ├── provider.tf
+            └── variables.tf
 Notes
-Log in to Azure CLI first:
+Ensure Docker and Terraform are installed for the respective tasks.
 
-bash
-Copy code
-az login
-Use a .tfvars file or environment variables for secrets instead of committing them to Git.
+Update configuration files (config.yaml for TASK1, variables.tf for TASK2) before running.
 
-Contributing
-Contributions are welcome:
-
-Fork the repository.
-
-Create a feature branch:
-
-bash
-Copy code
-git checkout -b feature-name
-Make changes and commit:
-
-bash
-Copy code
-git commit -m "Add new feature"
-Push to your branch:
-
-bash
-Copy code
-git push origin feature-name
-Open a Pull Request for review.
-
-License
-This repository is licensed under the MIT License.
-
-Contact
-Created by Radoslav – DevOps Engineer.
-
-For questions, open an issue in this repository.
+This README provides a complete overview for both tasks and can serve as a quick reference.
