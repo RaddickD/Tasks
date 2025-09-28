@@ -35,7 +35,8 @@ Or run using Docker Compose:
 bash
 Copy code
 docker-compose up
-TASK2: Azure Infrastructure
+
+## TASK2: Azure Infrastructure
 Location: TASK2/azure-infrastructure
 
 This task sets up Azure infrastructure using Terraform. The configuration provisions resources in Azure based on the variables defined.
