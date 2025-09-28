@@ -1,0 +1,49 @@
+# SSL Certificate Checker Configuration
+
+# List of websites to check
+websites:
+  - hostname: google.com
+    port: 443
+  - hostname: github.com
+    port: 443
+  - hostname: microsoft.com
+    port: 443
+  - hostname: azure.microsoft.com
+    port: 443
+  - hostname: stackoverflow.com
+    port: 443
+
+# Concurrent workers for parallel checking
+max_workers: 5
+
+# Certificate expiry thresholds (in days)
+thresholds:
+  warning: 30  # Warn if certificate expires in less than 30 days
+  critical: 7  # Critical if certificate expires in less than 7 days
+
+# Alert configuration
+alerts:
+  enabled: true
+  
+  # Email alerts
+  email:
+    enabled: false  # Set to true to enable email alerts
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    use_tls: true
+    username: your-email@gmail.com
+    password: your-app-password  # Use app-specific password for Gmail
+    from: your-email@gmail.com
+    to:
+      - recipient1@example.com
+      - recipient2@example.com
+    subject: "SSL Certificate Expiry Alert"
+  
+  # Webhook alerts (Slack or Teams)
+  webhook:
+    enabled: false  # Set to true to enable webhook alerts
+    type: teams  # Options: 'slack' or 'teams'
+    url: https://hooks.slack.com/services/YOUR/WEBHOOK/URL  # Replace with your webhook URL
+    
+    # For Teams webhook, use format:
+    # url: https://outlook.office.com/webhook/YOUR-WEBHOOK-URL

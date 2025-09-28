@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  cert-checker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ssl-cert-checker
+    volumes:
+      # Mount config file from host
+      - ./config.yaml:/app/config.yaml:ro
+      # Optional: Mount for output logs
+      - ./logs:/app/logs
+    environment:
+      - TZ=UTC
+    # Run once and exit
+    restart: "no"
+    
+  # Optional: Run as a scheduled job using cron-like scheduler
+  cert-checker-scheduled:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ssl-cert-checker-scheduled
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./logs:/app/logs
+    environment:
+      - TZ=UTC
+    # Use cron-like restart policy
+    restart: unless-stopped
+    # Override command to run periodically
+    entrypoint: ["/bin/sh", "-c"]
+    command: 
+      - |
+        while true; do
+          echo "Running certificate check at $$(date)"
+          python cert_checker.py -c config.yaml
+          echo "Sleeping for 24 hours..."
+          sleep 86400
+        done
